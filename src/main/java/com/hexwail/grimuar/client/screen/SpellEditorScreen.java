@@ -1,38 +1,38 @@
-package com.hexwail.grimuar.client.screen;
+package com.hexwail.grimuar.client.gui.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.hexwail.grimuar.GrimuarMod;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import com.hexwail.grimuar.common.menu.SpellEditorMenu;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 
-public class SpellEditorScreen extends AbstractContainerScreen<SpellEditorMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("grimuar", "textures/gui/spell_editor.png");
+public class SpellEditorScreen extends AbstractContainerScreen<AbstractContainerMenu> {
 
-    public SpellEditorScreen(SpellEditorMenu menu, Inventory inv, Component title) {
-        super(menu, inv, title);
+    private static final ResourceLocation TEXTURE =
+        new ResourceLocation(GrimuarMod.MODID, "textures/gui/spell_editor.png");
+
+    public SpellEditorScreen(AbstractContainerMenu menu, Inventory playerInventory, Component title) {
+        super(menu, playerInventory, title);
         this.imageWidth = 176;
         this.imageHeight = 166;
     }
 
     @Override
-    protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        graphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+        guiGraphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
     }
 
     @Override
-    protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        graphics.drawString(this.font, this.title, 8, 6, 0x404040, false);
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        guiGraphics.drawString(font, this.title, 8, 6, 0xFFFFFF);
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(graphics);
-        super.render(graphics, mouseX, mouseY, partialTicks);
-        this.renderTooltip(graphics, mouseX, mouseY);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 }
