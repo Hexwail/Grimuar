@@ -1,18 +1,21 @@
 package com.hexwail.grimuar;
 
+import com.hexwail.grimuar.init.MenuInit;
+import com.hexwail.grimuar.init.GrimuarScreens;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-@Mod(GrimuarMod.MODID)
+@Mod("grimuar")
 public class GrimuarMod {
-    public static final String MODID = "grimuar";
 
     public GrimuarMod() {
-        // Реєстрація подій та ініціалізація тут
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        MenuInit.MENUS.register(FMLJavaModLoadingContext.get().getModEventBus());
+
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
     }
 
-    private void setup(final net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) {
-        // Початкова ініціалізація (блоки, предмети, магія тощо)
+    private void clientSetup(final FMLClientSetupEvent event) {
+        GrimuarScreens.registerScreens(event);
     }
 }
