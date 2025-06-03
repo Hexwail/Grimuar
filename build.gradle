@@ -1,0 +1,68 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '6.0.+'
+    id 'eclipse'
+    id 'maven-publish'
+}
+
+group = 'com.hexwail.grimuar'
+version = '0.1.0'
+archivesBaseName = 'grimuar'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+    
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                grimuar {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                grimuar {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = "https://maven.minecraftforge.net" }
+    maven { url = "https://cursemaven.com" }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.4.0'
+
+    // Приклад для зовнішніх модів (розкоментуй при потребі)
+    // implementation fg.deobf("curse.maven:vampirism-xxx:yyy")
+    // implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.20.1:4.2.3")
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "Grimuar",
+            "Specification-Vendor": "Hexwail",
+            "Implementation-Title": project.name,
+            "Implementation-Version": project.version,
+            "Implementation-Vendor": "Hexwail",
+            "Built-By": System.getProperty("user.name"),
+            "Built-JDK": System.getProperty("java.version"),
+            "Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
